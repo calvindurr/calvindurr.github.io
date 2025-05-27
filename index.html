@@ -1,119 +1,287 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calvin Durr – Energy &amp; Software Professional</title>
-  <meta name="description" content="Energy analyst and software engineer specialising in data-driven optimisation and forecasting." />
+  <title>Calvin Durr – Energy · Software · Insight</title>
+  <meta name="description"
+        content="Calvin Durr – senior energy-systems engineer & data scientist turning messy data into clean, profitable decisions." />
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:title" content="Calvin Durr – Energy · Software · Insight" />
+  <meta property="og:description"
+        content="Senior engineer in renewable & conventional power systems, specialising in Python forecasting and optimisation." />
+  <meta property="og:image" content="https://calvindurr.github.io/og-image.jpg" />
+  <meta property="og:type"  content="website" />
+
   <link rel="icon" href="favicon.ico" />
-  <!-- Tailwind via CDN → no build step required -->
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- ▸▸ Tailwind config FIRST so dark-mode 'class' works ◂◂ -->
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script defer src="https://unpkg.com/feather-icons"></script>
+  <link  href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Alpine Collapse plugin BEFORE Alpine core -->
+  <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    body {
-      font-family: "Inter", sans-serif;
-    }
+    body{font-family:"Inter",system-ui,sans-serif;}
+    /* animated gradient hero */
+    .animated-gradient{background:linear-gradient(120deg,#0284c7,#0f172a,#0e7490,#3b82f6);background-size:200% 200%;animation:gradientMove 10s ease-in-out infinite;}
+    @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    /* glass effect */
+    .glass{backdrop-filter:saturate(180%) blur(14px);background:rgba(255,255,255,.05);}
   </style>
 </head>
-<body class="text-gray-800 bg-gray-50">
-  <!-- ═════════════ HERO ═════════════ -->
-  <section class="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-sky-600 via-slate-800 to-black text-white px-6 text-center">
-    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight">Calvin Durr</h1>
-    <p class="mt-4 text-xl md:text-2xl max-w-2xl">Optimising energy systems with data-driven software.</p>
-    <div class="mt-8 flex flex-col sm:flex-row gap-4">
-      <a href="#about" class="px-6 py-3 rounded-full bg-white/10 backdrop-blur hover:bg-white/20 transition">Learn more</a>
-      <a href="Calvin_Durr_Resume.pdf" class="px-6 py-3 rounded-full bg-white text-slate-900 font-semibold hover:bg-slate-100 transition" download>Download résumé</a>
+
+<body class="text-gray-800 dark:text-gray-100 dark:bg-gray-900 bg-gray-50"
+      x-data="{dark:false,navOpen:false}"
+      x-init="dark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+              if(dark){document.documentElement.classList.add('dark')}">
+
+  <!-- ============== NAV ============== -->
+  <header x-data="{scrolled:false}"
+          @scroll.window="scrolled=window.scrollY>40"
+          :class="scrolled?'shadow-lg/5':''"
+          class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 md:py-3 glass rounded-b-2xl">
+      <a href="#top" class="text-lg font-semibold tracking-wide flex items-center gap-1">
+        <svg width="24" height="24" class="text-sky-600 dark:text-sky-400"
+             xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 13 9 20 9 20 20 4 20 4 2 13 2"></polygon>
+        </svg>
+        Calvin
+      </a>
+
+      <div class="hidden md:flex gap-6 text-sm tracking-wide">
+        <a href="#about"      class="hover:text-sky-600">About</a>
+        <a href="#experience" class="hover:text-sky-600">Experience</a>
+        <a href="#skills"     class="hover:text-sky-600">Skills</a>
+        <a href="#education"  class="hover:text-sky-600">Education</a>
+        <a href="#contact"    class="hover:text-sky-600">Contact</a>
+
+        <!-- theme toggle -->
+        <!-- <button @click="dark=!dark;document.documentElement.classList.toggle('dark')"
+                class="border border-gray-400/20 px-2 rounded-md hover:bg-gray-200/10"
+                title="Toggle light/dark" aria-label="Toggle dark mode"> -->
+          <!-- <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor"> -->
+            <!-- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 3v1m0 16v1m8.66-12.34l-.7.7M4.05 18.36l-.7.7M20 12h1M3 12H2m16.95 5.36l.7.7M4.05 5.64l.7.7M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+          </svg> -->
+          <!-- <svg x-show="dark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor"
+               viewBox="0 0 24 24">
+            <path d="M21.752 15.002a9.718 9.718 0 01-5.908 5.908 10.108 10.108 0 01-11.97-4.097 1 1 0 011.608-1.162 8.108 8.108 0 009.576 3.286 7.718 7.718 0 004.698-4.698 8.109 8.109 0 00-3.285-9.576A1 1 0 0111.19 3.04a10.108 10.108 0 014.096 11.97 9.718 9.718 0 015.908 5.992 1 1 0 01-.44.44z"/>
+          </svg>
+        </button> -->
+      </div>
+
+      <!-- burger -->
+      <button @click="navOpen=!navOpen" class="md:hidden" title="Menu">
+        <i data-feather="menu"></i>
+      </button>
+    </nav>
+
+    <!-- mobile panel -->
+    <div x-show="navOpen" @click.outside="navOpen=false"
+         class="md:hidden glass backdrop-blur py-6 px-6 space-y-4">
+      <a href="#about"      class="block" @click="navOpen=false">About</a>
+      <a href="#experience" class="block" @click="navOpen=false">Experience</a>
+      <a href="#skills"     class="block" @click="navOpen=false">Skills</a>
+      <a href="#education"  class="block" @click="navOpen=false">Education</a>
+      <a href="#contact"    class="block" @click="navOpen=false">Contact</a>
+    </div>
+  </header>
+
+  <!-- ============== HERO ============== -->
+  <section id="top"
+           class="animated-gradient min-h-[100vh] flex flex-col items-center justify-center text-center text-white px-6 relative overflow-hidden">
+    <div class="absolute -top-32   -left-32  w-96 h-96 bg-fuchsia-500 rounded-full mix-blend-overlay opacity-30 blur-3xl animate-pulse"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-sky-500     rounded-full mix-blend-overlay opacity-30 blur-3xl animate-pulse"></div>
+
+    <h1 class="text-5xl md:text-7xl font-extrabold leading-tight drop-shadow-lg"
+        data-aos="fade-down">Calvin Durr</h1>
+    <p class="mt-4 text-xl md:text-2xl max-w-xl mx-auto"
+       data-aos="fade-up" data-aos-delay="100">
+       Engineering better energy futures through data-driven software.
+    </p>
+
+    <!-- ▸▸ BUTTONS ◂◂ -->
+    <div class="mt-10 flex flex-col sm:flex-row gap-4"
+         data-aos="zoom-in" data-aos-delay="200">
+      <!-- LinkedIn CONNECT (replaces Explore) -->
+      <a href="https://www.linkedin.com/in/calvin-durr/" target="_blank" rel="noopener"
+         class="px-8 py-3 rounded-full bg-[#0A66C2] hover:bg-[#084d99]
+                text-white font-semibold shadow hover:shadow-lg transition
+                flex items-center gap-2">
+        <i data-feather="linkedin"></i>Connect&nbsp;on&nbsp;LinkedIn
+      </a>
+      <!-- Résumé -->
+      <a href="Calvin_Durr_Resume.pdf" download
+         class="px-8 py-3 rounded-full bg-white text-slate-900 font-semibold
+                shadow hover:shadow-lg transition flex items-center gap-2">
+        <i data-feather="download"></i>Résumé
+      </a>
+    </div>
+  </section>
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="py-24 px-6" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-sky-600 dark:text-sky-400">About me</h2>
+      <p class="text-lg md:text-xl leading-relaxed">Seasoned energy‑systems engineer with a knack for turning chaotic terabytes into clear, profitable decisions. I bridge the gap between research and production code, delivering models that stand up to both academic scrutiny and real‑world deadlines.</p>
     </div>
   </section>
 
-  <!-- ═════════════ ABOUT ═════════════ -->
-  <section id="about" class="py-20 px-6 md:px-0">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-6">About me</h2>
-      <p class="text-lg leading-relaxed">
-        I’m an energy professional specialising in Python-powered forecasting, optimisation and risk modelling. I thrive in fast-moving teams and love turning complex, messy data into elegant, actionable insights.
-      </p>
+  <!-- ================= EXPERIENCE ================= -->
+  <section id="experience" class="bg-white dark:bg-gray-800 py-24 px-6" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-sky-600 dark:text-sky-400">Experience</h2>
+      <ol class="relative border-s border-gray-200 dark:border-gray-700">
+        <!-- Job 1 -->
+        <li class="relative pl-8 pb-10" data-aos="fade-right" data-aos-delay="100">
+          <div class="absolute -left-2 top-2 w-4 h-4 bg-sky-600 dark:bg-sky-400 rounded-full border-4 border-white dark:border-gray-800"></div>
+          <time class="text-xs uppercase tracking-wide text-gray-400">2024 – Present</time>
+          <h3 class="font-semibold text-lg md:text-xl mt-1">Senior Demand Forecasting Analyst <span class="text-sky-600 dark:text-sky-400">@ So Energy</span></h3>
+          <ul class="list-disc pl-5 mt-2 space-y-1 text-sm md:text-base">
+            <li>Migrated forecasts to GCP CI/CD, slicing runtime 57 %.</li>
+            <li>Built live imbalance dashboards (Python + Dash).</li>
+            <li>Deployed physics‑based wind models cutting day‑ahead costs.</li>
+          </ul>
+        </li>
+        <!-- Job 2 -->
+        <li class="relative pl-8 pb-10" data-aos="fade-right" data-aos-delay="200">
+          <div class="absolute -left-2 top-2 w-4 h-4 bg-sky-600 dark:bg-sky-400 rounded-full border-4 border-white dark:border-gray-800"></div>
+          <time class="text-xs uppercase tracking-wide text-gray-400">2023 – 2024</time>
+          <h3 class="font-semibold text-lg md:text-xl mt-1">Energy Analyst <span class="text-sky-600 dark:text-sky-400">@ NOA Group</span></h3>
+          <ul class="list-disc pl-5 mt-2 space-y-1 text-sm md:text-base">
+            <li>Pioneered first Python trading algorithm; boosted margins 20 % across 800 MW.</li>
+            <li>Led due diligence on 15 GW renewables pipeline, underpinning multiple acquisitions.</li>
+          </ul>
+        </li>
+        <!-- Earlier roles toggle -->
+        <li x-data="{open:false}" class="mt-4">
+          <button @click="open=!open" class="text-sky-600 hover:underline text-sm flex items-center gap-1"><span x-text="open?'Hide earlier roles':'See earlier roles'"></span> <i data-feather="chevron-down" :class="{'rotate-180':open}" class="transition-transform"></i></button>
+          <div x-show="open" x-collapse class="mt-4 space-y-8" x-cloak>
+            <div class="relative pl-8 pb-4" data-aos="fade-right">
+              <div class="absolute -left-2 top-2 w-4 h-4 bg-sky-600 dark:bg-sky-400 rounded-full border-4 border-white dark:border-gray-800"></div>
+              <time class="text-xs uppercase tracking-wide text-gray-400">2022 – 2023</time>
+              <h3 class="font-semibold mt-1">Head of Asset Management <span class="text-sky-600 dark:text-sky-400">@ ACES Africa</span></h3>
+            </div>
+            <div class="relative pl-8 pb-4" data-aos="fade-right">
+              <div class="absolute -left-2 top-2 w-4 h-4 bg-sky-600 dark:bg-sky-400 rounded-full border-4 border-white dark:border-gray-800"></div>
+              <time class="text-xs uppercase tracking-wide text-gray-400">2021 – 2022</time>
+              <h3 class="font-semibold mt-1">Design Engineer <span class="text-sky-600 dark:text-sky-400">@ ACES Africa</span></h3>
+            </div>
+            <div class="relative pl-8 pb-4" data-aos="fade-right">
+              <div class="absolute -left-2 top-2 w-4 h-4 bg-sky-600 dark:bg-sky-400 rounded-full border-4 border-white dark:border-gray-800"></div>
+              <time class="text-xs uppercase tracking-wide text-gray-400">2021</time>
+              <h3 class="font-semibold mt-1">Software Engineer Intern <span class="text-sky-600 dark:text-sky-400">@ SilverSky</span></h3>
+            </div>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 
-  <!-- ═════════════ EXPERIENCE ═════════════ -->
-  <section id="experience" class="py-20 bg-white px-6 md:px-0">
+  <!-- ================= SKILLS ================= -->
+  <section id="skills" class="py-24 px-6" data-aos="fade-up">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-6">Experience</h2>
-
-      <div class="mb-8">
-        <h3 class="text-xl font-semibold">Senior Demand Forecasting Analyst – So Energy</h3>
-        <p class="text-sm text-gray-500">Oct 2024 – Present • Manchester, UK</p>
-        <ul class="list-disc pl-5 mt-2 space-y-1">
-          <li>Migrated forecasting models to GCP CI/CD pipelines, reducing processing time by 57 %.</li>
-          <li>Built Python/Dash accuracy dashboards to surface imbalance metrics in real time.</li>
-          <li>Developed physics-based wind power models, cutting day-ahead imbalance costs.</li>
-        </ul>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-sky-600 dark:text-sky-400">Skills snapshot</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-8">
+        <span class="px-4 py-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-sm font-medium">Python</span>
+        <span class="px-4 py-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-sm font-medium">Forecasting</span>
+        <span class="px-4 py-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-sm font-medium">Optimisation</span>
+        <span class="px-4 py-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-sm font-medium">GCP • Azure</span>
+        <span class="px-4 py-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-sm font-medium">Dashboards</span>
+        <span class="px-4 py-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-sm font-medium">Risk modelling</span>
+        <span class="px-4 py-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-sm font-medium">Pandas</span>
+        <span class="px-4 py-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-sm font-medium">SQL</span>
       </div>
+    </div>
+  </section>
 
-      <div class="mb-8">
-        <h3 class="text-xl font-semibold">Energy Analyst – NOA Group</h3>
-        <p class="text-sm text-gray-500">May 2023 – Sept 2024 • Cape Town</p>
-        <ul class="list-disc pl-5 mt-2 space-y-1">
-          <li>Led a team to build NOA’s first Python trading algorithm, boosting margins by 20 % across an 800 MW portfolio.</li>
-          <li>Performed due diligence on a 15 GW greenfield pipeline, steering two landmark acquisitions.</li>
-        </ul>
-      </div>
+  <!-- ================= EDUCATION & MORE ================= -->
+<section id="education"
+           class="bg-white dark:bg-gray-800 py-24 px-6"
+           data-aos="fade-up">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-sky-600 dark:text-sky-400">
+        Education & more
+      </h2>
 
-      <details>
-        <summary class="cursor-pointer text-sky-600">More roles</summary>
-        <div class="mt-4 space-y-6">
-          <div>
-            <h4 class="font-semibold">Head of Asset Management – ACES Africa</h4>
-            <p class="text-sm text-gray-500">Nov 2022 – Apr 2023</p>
-          </div>
-          <div>
-            <h4 class="font-semibold">Design Engineer – ACES Africa</h4>
-            <p class="text-sm text-gray-500">Aug 2021 – Nov 2022</p>
-          </div>
-          <div>
-            <h4 class="font-semibold">Software Engineer Intern – SilverSky</h4>
-            <p class="text-sm text-gray-500">Jan 2021 – Jul 2021</p>
-          </div>
+      <div class="space-y-10">
+        <div>
+          <h3 class="text-xl font-semibold mb-3">Education</h3>
+          <p>BEng Mechatronic Engineering — Stellenbosch University</p>
         </div>
-      </details>
-    </div>
-  </section>
 
-  <!-- ═════════════ SKILLS ═════════════ -->
-  <section id="skills" class="py-20 px-6 md:px-0">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-6">Core skills</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
-        <span class="px-4 py-2 rounded-lg bg-sky-100">Python</span>
-        <span class="px-4 py-2 rounded-lg bg-sky-100">Forecasting</span>
-        <span class="px-4 py-2 rounded-lg bg-sky-100">Optimisation</span>
-        <span class="px-4 py-2 rounded-lg bg-sky-100">GCP &amp; Azure</span>
-        <span class="px-4 py-2 rounded-lg bg-sky-100">Dashboards</span>
-        <span class="px-4 py-2 rounded-lg bg-sky-100">Risk modelling</span>
+        <div>
+          <h3 class="text-xl font-semibold mb-3">Certifications</h3>
+          <p>Registered Candidate Engineer — Engineering Council of South Africa (ECSA)</p>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-3">Languages</h3>
+          <p>English (native), Afrikaans (fluent), Dutch (intermediate)</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ═════════════ CONTACT ═════════════ -->
-  <section id="contact" class="py-20 bg-white px-6 md:px-0">
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="py-24 px-6" data-aos="fade-up">
     <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-6">Get in touch</h2>
-      <p class="mb-4">I’m always keen to discuss challenging energy problems, data-driven products, or new collaborations.</p>
-      <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <a href="mailto:calvindurr@gmail.com" class="px-6 py-3 rounded-full bg-sky-600 text-white hover:bg-sky-700 transition">Email me</a>
-        <a href="https://www.linkedin.com/in/calvin-durr/" class="px-6 py-3 rounded-full border border-sky-600 text-sky-600 hover:bg-sky-50 transition">LinkedIn</a>
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-sky-600 dark:text-sky-400">Say hello</h2>
+      <p class="text-lg md:text-xl leading-relaxed mb-8">Whether you want to chat about energy, data, or collaborate on a side project, drop me a line.</p>
+      <form action="https://formspree.io/f/mayvdjyl" method="POST" class="max-w-md mx-auto">
+        <div class="grid gap-4 text-left">
+          <input required type="text" name="name" placeholder="Your name" class="px-4 py-3 rounded-md bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-sky-600 focus:outline-none placeholder-gray-500 dark:placeholder-gray-400" />
+          <input required type="email" name="email" placeholder="Email" class="px-4 py-3 rounded-md bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-sky-600 focus:outline-none placeholder-gray-500 dark:placeholder-gray-400" />
+          <textarea required name="message" rows="4" placeholder="Message" class="px-4 py-3 rounded-md bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-sky-600 focus:outline-none placeholder-gray-500 dark:placeholder-gray-400"></textarea>
+          <button type="submit" class="w-full py-3 rounded-md bg-sky-600 hover:bg-sky-700 text-white font-semibold transition">Send message</button>
+        </div>
+      </form>
+      <div class="mt-8 flex justify-center gap-6">
+        <a href="mailto:calvindurr@gmail.com" class="p-3 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i data-feather="mail"></i></a>
+        <!-- the LinkedIn anchor was cut off above → here it is completed -->
+        <a href="https://www.linkedin.com/in/calvin-durr/"
+           class="p-3 rounded-full border border-gray-300 dark:border-gray-600
+                  hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <i data-feather="linkedin"></i>
+        </a>
+        <!-- optional GitHub icon -->
+        <a href="https://github.com/calvindurr"
+           class="p-3 rounded-full border border-gray-300 dark:border-gray-600
+                  hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <i data-feather="github"></i>
+        </a>
       </div>
-      <p class="mt-8 text-sm text-gray-400">© <span id="year"></span> Calvin Durr</p>
     </div>
   </section>
 
-  <script>
-    // Auto-update copyright year
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <!-- ================= FOOTER ================= -->
+  <footer class="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+    © <span id="year"></span> Calvin Durr. All rights reserved.
+  </footer>
+
+  <!-- =============== JS =============== -->
+  <script defer src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://unpkg.com/feather-icons" defer></script>
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({ duration: 700, once: true });
+    feather.replace();                            // ← now safe
+    document.getElementById('year').textContent =
+      new Date().getFullYear();
+  });
+</script>
 </body>
 </html>
